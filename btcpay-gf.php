@@ -27,7 +27,7 @@ use BTCPayServer\Util\PreciseNumber;
 class Am_Paysystem_BtcpayGf extends Am_Paysystem_ManualRebill
 {
     public const PLUGIN_STATUS = self::STATUS_BETA;
-    public const PLUGIN_REVISION = '1.0';
+    public const PLUGIN_REVISION = '1.1';
 
     public const BTCPAY_INVOICE_ID = 'btcpay-invoice-id';
 
@@ -59,6 +59,22 @@ class Am_Paysystem_BtcpayGf extends Am_Paysystem_ManualRebill
                 ['empty_title' => 'Use Plugin Default', 'options' => $this->transactionSpeedOptions]
             )
         );
+    }
+
+    // NB: This hook ONLY fires on pages where payment systems are loaded
+    // such as signup forms, payment history page, and directAction pages
+    // If a CC module plugin is enabled, also on member home page
+    public function onBeforeRender(Am_Event $e): void
+    {
+        // Inject BTCPay receipt link into payment history widget
+        if (false !== strpos($e->getTemplateName(), 'blocks/member-history-paymenttable')) {
+            $v = $e->getView();
+            foreach ($v->payments as &$p) {
+                if ($p->paysys_id == $this->getId()) {
+                    $p->_invoice_url = $this->getConfig('btcpay_server').'/i/'.$p->receipt_id.'/receipt';
+                }
+            }
+        }
     }
 
     public function _initSetupForm(Am_Form_Setup $form)
@@ -161,7 +177,7 @@ class Am_Paysystem_BtcpayGf extends Am_Paysystem_ManualRebill
             Optional. Sends message when a BTCPay refund is issued, so user can claim their refund. Claim link will be added to user notes in any case so admin can share with user as needed.'))
         ;
         $gr->addAdvCheckbox('send_refund_email');
-        $gr->addElement('email_link', "email_refund_link")
+        $gr->addElement('email_link', 'email_refund_link')
             ->setLabel(___('Email template for refund link notice'))
         ;
     }
