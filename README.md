@@ -18,6 +18,12 @@ This plugin requires [aMember](https://www.cogmentis.com/go/amember) v6.x and PH
 
 2. Enable and configure the plugin in *aMember CP -> Setup/Configuration -> Plugins*
 
+### TROUBLESHOOTING
+
+This plugin writes BTCPay responses to the aMember Invoice log (aMember admin > Utilities > Logs > Invoice).
+
+In case of an error, please check there as well as in the aMember Error Log (aMember admin > Utilities > Logs > Errors).
+
 ### LICENCE / CREDITS
 
 This plugin is provided under the MIT License.
