@@ -12,7 +12,7 @@
  */
 
 // BTCPay Greenfield API PHP SDK
-require __DIR__.'/btcpayserver-greenfield-php-2.6.0/src/autoload.php';
+require __DIR__.'/btcpayserver-greenfield-php-2.7.1/src/autoload.php';
 
 use BTCPayServer\Client\Invoice as ClientInvoice;
 use BTCPayServer\Client\InvoiceCheckoutOptions;
@@ -27,7 +27,7 @@ use BTCPayServer\Util\PreciseNumber;
 class Am_Paysystem_BtcpayGf extends Am_Paysystem_ManualRebill
 {
     public const PLUGIN_STATUS = self::STATUS_BETA;
-    public const PLUGIN_REVISION = '1.1';
+    public const PLUGIN_REVISION = '2.0';
 
     public const BTCPAY_INVOICE_ID = 'btcpay-invoice-id';
 
